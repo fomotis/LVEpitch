@@ -178,7 +178,7 @@ $Z_{tijl} \sim \mbox{normal}(\psi_{tij}, \tau^2_{ij}) \Rightarrow \bar{Z}_{tij} 
 | Model  | $a$                   | $r$                                                                       | npar
 |--------|-----------------------|---------------------------------------------------------------------------|-----
 | 1      | $a_{12} \neq a_{21}$  | $c_i$                                                                     | 6
-| 3C     | $a_{12} \neq a_{21}$  | $\beta_{0} + \beta_{1} \left(\frac{\psi'_i(t) - \psi'_i}{	au^2_i}\right)$ | 4
+| 3C     | $a_{12} \neq a_{21}$  | $\beta_{0} + \beta_{1} \left(\frac{\psi'_i(t) - \psi'_i}{\tau^2_i}\right)$ | 4
 
 ]
 
@@ -191,21 +191,21 @@ mstrat2
 ```
 ]
 
-* Model Class 1 $\Rightarrow$ Shared parameter (Competition does not change intraspecific interaction)
-* Model Class 2 $\Rightarrow$ Independence (Competition changes intraspecific interaction)
-* Model Class 3 $\Rightarrow$ Correlated parameters ()
+* Model Class 1 $\Rightarrow$ Shared parameter <span style="color: red;">(competition does not change intraspecific interaction) </span>
+* Model Class 2 $\Rightarrow$ Independence <span style="color: red;">(competition changes intraspecific interaction)</span>
+* Model Class 3 $\Rightarrow$ Correlated parameters <span style="color: red;">(competition modifies intraspecific interaction)</span>
 
 ---
 ### Some Results
 
 .pull-left[
-```{r, fig.height=5, fig.width=10, fig.cap='looic for model 1 in model class and model class 2', echo=FALSE}
+```{r, fig.height=5, fig.width=10, fig.cap='looic for model 1', echo=FALSE}
 knitr::include_graphics(im9)
 ```
 ]
 
 .pull-right[
-```{r, fig.height=5, fig.width=10, fig.cap='looic for model 3C in model class and model class 2', echo=FALSE}
+```{r, fig.height=5, fig.width=10, fig.cap='looic for model 3C', echo=FALSE}
 knitr::include_graphics(im10)
 ```
 ]

@@ -130,7 +130,7 @@ class: inverse, center
 | Model  | `\(a\)`                   | `\(r\)`                                                                       | npar
 |--------|-----------------------|---------------------------------------------------------------------------|-----
 | 1      | `\(a_{12} \neq a_{21}\)`  | `\(c_i\)`                                                                     | 6
-| 3C     | `\(a_{12} \neq a_{21}\)`  | `\(\beta_{0} + \beta_{1} \left(\frac{\psi'_i(t) - \psi'_i}{	au^2_i}\right)\)` | 4
+| 3C     | `\(a_{12} \neq a_{21}\)`  | `\(\beta_{0} + \beta_{1} \left(\frac{\psi'_i(t) - \psi'_i}{\tau^2_i}\right)\)` | 4
 
 ]
 
@@ -138,28 +138,28 @@ class: inverse, center
 
 #### Possible Model Classes
 
-<div id="htmlwidget-0ba0c5c4eaadf9dce682" style="width:80%;height:80%;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0ba0c5c4eaadf9dce682">{"x":{"diagram":"\n  digraph Model_Strategy {\n  # \n  graph [overlap = true, fontsize = 10, layout = dot, rankdir = LR]\n  \n  #Nodes\n  node [shape = box, fontname = Helvetica]\n  \n  node [label = <Model Class1a QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT>=&tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT> = &tau;, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> = w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT> = w>]\n  MC1B\n  \n  node [label = <Model Class2 QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT>&ne;&tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &ne; w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>>] \n  MC2B\n  \n  node [label = <Model Class3 QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &tilde; &tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &tilde; w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>>] \n  MC3B\n  \n  \n  node [label = <Model Class1 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1,ii<\/SUB><\/FONT> = a<FONT POINT-SIZE=\"8\"><SUB>p=2,ii<\/SUB><\/FONT> = a<FONT POINT-SIZE=\"8\"><SUB>ii<\/SUB><\/FONT>>]\n  MC1CL\n  \n  node [label = <Model Class2 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1, 11<\/SUB><\/FONT> &ne; a<FONT POINT-SIZE=\"8\"><SUB>p=2, 11<\/SUB><\/FONT>>] \n  MC2CL\n  \n  node [label = <Model Class3 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1, 11<\/SUB><\/FONT> &tilde; a<FONT POINT-SIZE=\"8\"><SUB>p=2, 11<\/SUB><\/FONT>>] \n  MC3CL\n  \n  node [label = \"Best\nQLVE\"] \n  BestB\n  \n  \n  node [label = \"Best\nCLVE\"]\n  BestCL\n  \n  \n  \n  #Edges\n  MC1B -> BestB MC2B -> BestB MC3B -> BestB MC1CL -> BestCL MC2CL -> BestCL MC3CL -> BestCL\n  \n}\n  \n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fa7688715af812255eeb" style="width:80%;height:80%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fa7688715af812255eeb">{"x":{"diagram":"\n  digraph Model_Strategy {\n  # \n  graph [overlap = true, fontsize = 10, layout = dot, rankdir = LR]\n  \n  #Nodes\n  node [shape = box, fontname = Helvetica]\n  \n  node [label = <Model Class1a QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT>=&tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT> = &tau;, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> = w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT> = w>]\n  MC1B\n  \n  node [label = <Model Class2 QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT>&ne;&tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &ne; w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>>] \n  MC2B\n  \n  node [label = <Model Class3 QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &tilde; &tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &tilde; w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>>] \n  MC3B\n  \n  \n  node [label = <Model Class1 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1,ii<\/SUB><\/FONT> = a<FONT POINT-SIZE=\"8\"><SUB>p=2,ii<\/SUB><\/FONT> = a<FONT POINT-SIZE=\"8\"><SUB>ii<\/SUB><\/FONT>>]\n  MC1CL\n  \n  node [label = <Model Class2 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1, 11<\/SUB><\/FONT> &ne; a<FONT POINT-SIZE=\"8\"><SUB>p=2, 11<\/SUB><\/FONT>>] \n  MC2CL\n  \n  node [label = <Model Class3 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1, 11<\/SUB><\/FONT> &tilde; a<FONT POINT-SIZE=\"8\"><SUB>p=2, 11<\/SUB><\/FONT>>] \n  MC3CL\n  \n  node [label = \"Best\nQLVE\"] \n  BestB\n  \n  \n  node [label = \"Best\nCLVE\"]\n  BestCL\n  \n  \n  \n  #Edges\n  MC1B -> BestB MC2B -> BestB MC3B -> BestB MC1CL -> BestCL MC2CL -> BestCL MC3CL -> BestCL\n  \n}\n  \n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
-* Model Class 1 `\(\Rightarrow\)` Shared parameter (Competition does not change intraspecific interaction)
-* Model Class 2 `\(\Rightarrow\)` Independence (Competition changes intraspecific interaction)
-* Model Class 3 `\(\Rightarrow\)` Correlated parameters ()
+* Model Class 1 `\(\Rightarrow\)` Shared parameter &lt;span style="color: red;"&gt;(competition does not change intraspecific interaction) &lt;/span&gt;
+* Model Class 2 `\(\Rightarrow\)` Independence &lt;span style="color: red;"&gt;(competition changes intraspecific interaction)&lt;/span&gt;
+* Model Class 3 `\(\Rightarrow\)` Correlated parameters &lt;span style="color: red;"&gt;(competition modifies intraspecific interaction)&lt;/span&gt;
 
 ---
 ### Some Results
 
 .pull-left[
 &lt;div class="figure"&gt;
-&lt;img src="Pics/loos_model1.png" alt="looic for model 1 in model class and model class 2" width="100%" /&gt;
-&lt;p class="caption"&gt;looic for model 1 in model class and model class 2&lt;/p&gt;
+&lt;img src="Pics/loos_model1.png" alt="looic for model 1" width="100%" /&gt;
+&lt;p class="caption"&gt;looic for model 1&lt;/p&gt;
 &lt;/div&gt;
 ]
 
 .pull-right[
 &lt;div class="figure"&gt;
-&lt;img src="Pics/loos_model3C.png" alt="looic for model 3C in model class and model class 2" width="100%" /&gt;
-&lt;p class="caption"&gt;looic for model 3C in model class and model class 2&lt;/p&gt;
+&lt;img src="Pics/loos_model3C.png" alt="looic for model 3C" width="100%" /&gt;
+&lt;p class="caption"&gt;looic for model 3C&lt;/p&gt;
 &lt;/div&gt;
 ]
 
