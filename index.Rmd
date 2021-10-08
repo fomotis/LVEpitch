@@ -1,0 +1,220 @@
+---
+title: "A Framework for Joint Analysis of Population Growth Experiments"
+subtitle: "An Example of Trait and Non-Trait Based Lotka-Volterra Models"  
+author: 
+  - "Olusoji O. D."
+  - "Neyens T"
+  - "De Laender Frederik"
+  - "Aerts Marc"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    seal: false
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(
+  fig.width=9, fig.height=3.5, fig.retina=3,
+  out.width = "100%",
+  cache = FALSE,
+  echo = TRUE,
+  message = FALSE, 
+  warning = FALSE,
+  hiline = TRUE
+)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+# style_duo_accent(
+#   primary_color = "#1381B0",
+#   secondary_color = "#FF961C",
+#   inverse_header_color = "#FFFFFF",
+#   #base_color = "#272822",
+#   white_color = "#FFFFFF",
+#   black_color = "#272822",
+#   header_font_google = google_font("Josefin Sans"),
+#   code_font_google   = google_font("Fira Mono"),
+#   text_font_base = "Open Sans",
+#   link_color = '#88398a'
+# )
+
+style_mono_accent(
+  base_color = "#272822",
+  white_color = "#FFFFFF",
+  black_color = "#272822",
+  header_font_google = google_font("Josefin Sans"),
+  #text_font_google   = google_font("Open Sans", "300", "300i"),
+  code_font_google   = google_font("Fira Mono"),
+  text_font_base = "Open Sans",
+  link_color = '#1381B0',
+  inverse_background_color = "#FFFFFF",
+  inverse_text_color = "#1381B0",
+  inverse_header_color = "#272822",
+  title_slide_text_color = "272822",
+  title_slide_background_color = "#FFFFFF",
+)
+
+im3 <- "Pics/EcologicalPerspective.PNG"
+im4 <- "Pics/StatisticalPerspective.PNG"
+im5 <- "Pics/Environment.PNG"
+im7 <- "pics/monoculture_experiment.PNG"
+im8 <- "Pics/biculture_experiment.PNG"
+im9 <- "Pics/loos_model1.png"
+im10 <- "Pics/loos_model3C.png"
+
+source("../Temperature_Preprocessing/model_comparisonFlow.R")
+#source("../Temperature_Preprocessing/plottingFunctions.R")
+```
+
+class: inverse, center
+
+<div style="text-align: left">
+<img style="float: center; margin: 0px 15px 15px 0px;" src="Pics/DSI-logo.png" width="80" height="80"/>
+</div>
+
+
+## A Framework for Joint Analysis of Population Growth Experiments
+
+### An Example of Trait and Non-Trait Based Lotka-Volterra Models
+
+#### HTML Slides: https://fomotis.github.io/LVEpitch/
+
+<div style="text-align: right">
+<img style="float: center; margin: 0px 15px 15px 0px;" src="Pics/ilee.jpg" width="120" height="120"/>
+</div>
+
+---
+
+## The Question
+
+.pull-left[
+```{r, echo=FALSE, out.width = "90%", out.height = "90%", fig.align='center', fig.cap='Effects of Interest.'}
+knitr::include_graphics(im4)
+```
+]
+
+.pull-right[
+```{r, echo=FALSE, out.width = "95%", out.height = "95%", fig.align='center', fig.cap='Possible Envoronmental Effects on the Effects of Interest.'}
+knitr::include_graphics(im5)
+```
+]
+
+* Broader Question: what role do traits play in biodiveristy dynamics?
+
+* Specific Question: what is the role of traits in **growth**, **competition** and co-existence of species?
+
+---
+
+## The Experiments
+
+.pull-left[
+```{r, echo=FALSE, out.width = "90%", out.height = "90%", fig.align='center', fig.cap='Monoculture Experiments'}
+knitr::include_graphics(im7)
+```
+]
+
+.pull-right[
+```{r, echo=FALSE, out.width = "90%", out.height = "90%", fig.align='center', fig.cap='Biculture Experiments'}
+knitr::include_graphics(im8)
+```
+]
+
+1. Typically, analysis of the datasets is carried out per experiment.
+
+2. Also, parameters are fixed across analysis based on assumed ecology theories believed to govern the system.
+
+    a. <span style="color: red;">Forcing of a system on data</span>
+    
+    b. <span style="color: red;"> Fitting just a part of the model space</span>
+
+---
+
+## Tools for a Joint Analysis
+
+$\left(\begin{array}{c}log(N_{1t1jk}) \\ log(N_{1t2jk}) \\ log(N_{2t1jk}) \\ log(N_{2t2jk}) \end{array}\right) \sim \mbox{MVN}(\mathbf{\mu_{tk}}, \Sigma_{k})$ where 
+
+$\mathbf{\mu_{tk}} = \left( \begin{array}{c} \mbox{E}(\log(N_{11k}))\\ \mbox{E}(\log(N_{12k})) \\ \mbox{E}(\log(N_{11k}))\\ \mbox{E}(\log(N_{12k}))  \end{array} \right),$ and $\Sigma_k = \left( \begin{array}{c|c} \Sigma_{1k} & O_{2,2} \\ \hline O_{2,2} & \Sigma_{2k}\end{array} \right),$
+
+$O_{2,2} \text{is a null matrix},$ $\Sigma_{1k} = \left( \begin{array}{cc} \sigma_{111k} & 0\\ 0 & \sigma_{122k}\end{array} \right),$ $\Sigma_{2k} = \left( \begin{array}{cc} \sigma_{211k} & \sigma_{212k}\\ \sigma_{212k} & \sigma_{222k}\end{array} \right)$ and $\sigma_{212k} = \rho_{212k}\sigma_{211k}\sigma_{222k}$.
+
+* $N_{ptijk}$ is the density of species $i = 1, 2$, independent replicate $j = 1, 2, 3$ measured at time $t = 1, 2, 3, \ldots, 8$ under temperature $k = 1, 2, 3$ and experiment $p = 1, 2$. Note that $p = \begin{cases}  1, \text{for monoculture}\\ 2, \text{for biculture} \end{cases}$
+
+---
+
+## Tools for a Joint Analysis (cont:)
+
+$\frac{d\mathbf{\mu_{k}(t)}}{dt} =  \left(\mathbf{r_k} - \mathbf{A_k}e^{\mathbf{\mu_{k}(t)}}\right)$ where 
+
+#### Classical Lotka-Volterra (CLVE)
+
+* $\mathbf{r_k} = \left(r_{1k}, r_{2k} \right)'$ represents the vector of intrinsic growth rate
+* $\mathbf{A_k} = \left( \begin{array}{cc} a_{11k} & a_{12k} \\ a_{21k} & a_{22k} \end{array} \right)$ represents the interaction matrix. $a_{ii}$ and $a_{ij}$ represents intra- and inter-strain competition. For $p = 1, a_{12k} = a_{21k} = 0$.
+
+#### Quantitative Genetic Lotka-Volterra (QLVE)
+
+$Z_{tijl} \sim \mbox{normal}(\psi_{tij}, \tau^2_{ij}) \Rightarrow \bar{Z}_{tij} \sim \mbox{normal}(\psi_{tij}, \frac{\tau^2_{ij}}{n_{tij}})$
+
+* $a_{ii'}(t) = \frac{\omega}{\sqrt{2\tau^2_{i} + 2\tau^2_{i'} + \omega^2}}exp\left(-\frac{(\psi_{i}(t) -\psi{_i'}(t))^2}{2\tau^2_{i} + 2\tau^2_{i'} + \omega^2} \right), \hat{\psi}_{i}(t) = \frac{\sum_j\sum_l z_{tijl}}{\sum_j n_{tij}}, \hat{\tau}^2_{i} = \frac{\sum_t\sum_j(n_{tij.} - 1)s^2_{tij.}}{\sum_t\sum_j(n_{tij} - 1)}$
+
+* $r_i(t) = \beta_1 + \beta_2 g(\psi_{i}(t))$ or $\beta_1 + \beta_2 g(\psi_{i}(t), \tau^2_{i})$ or $\frac{\gamma}{2}\left( erf(\frac{\kappa + 2\gamma - \psi(t)}{\sqrt{2\tau^2}}) - erf(\frac{\kappa - \psi(t)}{\sqrt{2\tau^2}}) \right)$
+
+---
+
+### Model Classes and Summary
+
+.pull-left[
+
+#### Model Summary
+
+| Model  | $a$                   | $r$                                                                       | npar
+|--------|-----------------------|---------------------------------------------------------------------------|-----
+| 1      | $a_{12} \neq a_{21}$  | $c_i$                                                                     | 6
+| 3C     | $a_{12} \neq a_{21}$  | $\beta_{0} + \beta_{1} \left(\frac{\psi'_i(t) - \psi'_i}{	au^2_i}\right)$ | 4
+
+]
+
+.pull-right[
+
+#### Possible Model Classes
+
+```{r, out.width = "80%", out.height = "80%", fig.align='center', echo=FALSE}
+mstrat2
+```
+]
+
+* Model Class 1 $\Rightarrow$ Shared parameter (Competition does not change intraspecific interaction)
+* Model Class 2 $\Rightarrow$ Independence (Competition changes intraspecific interaction)
+* Model Class 3 $\Rightarrow$ Correlated parameters ()
+
+---
+### Some Results
+
+.pull-left[
+```{r, fig.height=5, fig.width=10, fig.cap='looic for model 1 in model class and model class 2', echo=FALSE}
+knitr::include_graphics(im9)
+```
+]
+
+.pull-right[
+```{r, fig.height=5, fig.width=10, fig.cap='looic for model 3C in model class and model class 2', echo=FALSE}
+knitr::include_graphics(im10)
+```
+]
+
+---
+class: center, middle
+
+##  Questions & Suggestions `r emo::ji("grinning")`
+
+
+
+
