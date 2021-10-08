@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>A Framework for Joint Analysis of Population Growth Experiments</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Olusoji O. D." />
+    <meta name="author" content="Neyens T" />
+    <meta name="author" content="De Laender Frederik" />
+    <meta name="author" content="Aerts Marc" />
+    <meta name="date" content="2021-10-09" />
+    <script src="index_files/header-attrs/header-attrs.js"></script>
+    <script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+    <script src="index_files/viz/viz.js"></script>
+    <link href="index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="index_files/grViz-binding/grViz.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: inverse, center
+
+&lt;div style="text-align: left"&gt;
+&lt;img style="float: center; margin: 0px 15px 15px 0px;" src="Pics/DSI-logo.png" width="80" height="80"/&gt;
+&lt;/div&gt;
+
+
+## A Framework for Joint Analysis of Population Growth Experiments
+
+### An Example of Trait and Non-Trait Based Lotka-Volterra Models
+
+#### HTML Slides: https://fomotis.github.io/LVEpitch/
+
+&lt;div style="text-align: right"&gt;
+&lt;img style="float: center; margin: 0px 15px 15px 0px;" src="Pics/ilee.jpg" width="120" height="120"/&gt;
+&lt;/div&gt;
+
+---
+
+## The Question
+
+.pull-left[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="Pics/StatisticalPerspective.PNG" alt="Effects of Interest." width="90%" height="90%" /&gt;
+&lt;p class="caption"&gt;Effects of Interest.&lt;/p&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="Pics/Environment.PNG" alt="Possible Envoronmental Effects on the Effects of Interest." width="95%" height="95%" /&gt;
+&lt;p class="caption"&gt;Possible Envoronmental Effects on the Effects of Interest.&lt;/p&gt;
+&lt;/div&gt;
+]
+
+* Broader Question: what role do traits play in biodiveristy dynamics?
+
+* Specific Question: what is the role of traits in **growth**, **competition** and co-existence of species?
+
+---
+
+## The Experiments
+
+.pull-left[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="pics/monoculture_experiment.PNG" alt="Monoculture Experiments" width="90%" height="90%" /&gt;
+&lt;p class="caption"&gt;Monoculture Experiments&lt;/p&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="Pics/biculture_experiment.PNG" alt="Biculture Experiments" width="90%" height="90%" /&gt;
+&lt;p class="caption"&gt;Biculture Experiments&lt;/p&gt;
+&lt;/div&gt;
+]
+
+1. Typically, analysis of the datasets is carried out per experiment.
+
+2. Also, parameters are fixed across analysis based on assumed ecology theories believed to govern the system.
+
+    a. &lt;span style="color: red;"&gt;Forcing of a system on data&lt;/span&gt;
+    
+    b. &lt;span style="color: red;"&gt; Fitting just a part of the model space&lt;/span&gt;
+
+---
+
+## Tools for a Joint Analysis
+
+`\(\left(\begin{array}{c}log(N_{1t1jk}) \\ log(N_{1t2jk}) \\ log(N_{2t1jk}) \\ log(N_{2t2jk}) \end{array}\right) \sim \mbox{MVN}(\mathbf{\mu_{tk}}, \Sigma_{k})\)` where 
+
+`\(\mathbf{\mu_{tk}} = \left( \begin{array}{c} \mbox{E}(\log(N_{11k}))\\ \mbox{E}(\log(N_{12k})) \\ \mbox{E}(\log(N_{11k}))\\ \mbox{E}(\log(N_{12k}))  \end{array} \right),\)` and `\(\Sigma_k = \left( \begin{array}{c|c} \Sigma_{1k} &amp; O_{2,2} \\ \hline O_{2,2} &amp; \Sigma_{2k}\end{array} \right),\)`
+
+`\(O_{2,2} \text{is a null matrix},\)` `\(\Sigma_{1k} = \left( \begin{array}{cc} \sigma_{111k} &amp; 0\\ 0 &amp; \sigma_{122k}\end{array} \right),\)` `\(\Sigma_{2k} = \left( \begin{array}{cc} \sigma_{211k} &amp; \sigma_{212k}\\ \sigma_{212k} &amp; \sigma_{222k}\end{array} \right)\)` and `\(\sigma_{212k} = \rho_{212k}\sigma_{211k}\sigma_{222k}\)`.
+
+* `\(N_{ptijk}\)` is the density of species `\(i = 1, 2\)`, independent replicate `\(j = 1, 2, 3\)` measured at time `\(t = 1, 2, 3, \ldots, 8\)` under temperature `\(k = 1, 2, 3\)` and experiment `\(p = 1, 2\)`. Note that `\(p = \begin{cases}  1, \text{for monoculture}\\ 2, \text{for biculture} \end{cases}\)`
+
+---
+
+## Tools for a Joint Analysis (cont:)
+
+`\(\frac{d\mathbf{\mu_{k}(t)}}{dt} =  \left(\mathbf{r_k} - \mathbf{A_k}e^{\mathbf{\mu_{k}(t)}}\right)\)` where 
+
+#### Classical Lotka-Volterra (CLVE)
+
+* `\(\mathbf{r_k} = \left(r_{1k}, r_{2k} \right)'\)` represents the vector of intrinsic growth rate
+* `\(\mathbf{A_k} = \left( \begin{array}{cc} a_{11k} &amp; a_{12k} \\ a_{21k} &amp; a_{22k} \end{array} \right)\)` represents the interaction matrix. `\(a_{ii}\)` and `\(a_{ij}\)` represents intra- and inter-strain competition. For `\(p = 1, a_{12k} = a_{21k} = 0\)`.
+
+#### Quantitative Genetic Lotka-Volterra (QLVE)
+
+`\(Z_{tijl} \sim \mbox{normal}(\psi_{tij}, \tau^2_{ij}) \Rightarrow \bar{Z}_{tij} \sim \mbox{normal}(\psi_{tij}, \frac{\tau^2_{ij}}{n_{tij}})\)`
+
+* `\(a_{ii'}(t) = \frac{\omega}{\sqrt{2\tau^2_{i} + 2\tau^2_{i'} + \omega^2}}exp\left(-\frac{(\psi_{i}(t) -\psi{_i'}(t))^2}{2\tau^2_{i} + 2\tau^2_{i'} + \omega^2} \right), \hat{\psi}_{i}(t) = \frac{\sum_j\sum_l z_{tijl}}{\sum_j n_{tij}}, \hat{\tau}^2_{i} = \frac{\sum_t\sum_j(n_{tij.} - 1)s^2_{tij.}}{\sum_t\sum_j(n_{tij} - 1)}\)`
+
+* `\(r_i(t) = \beta_1 + \beta_2 g(\psi_{i}(t))\)` or `\(\beta_1 + \beta_2 g(\psi_{i}(t), \tau^2_{i})\)` or `\(\frac{\gamma}{2}\left( erf(\frac{\kappa + 2\gamma - \psi(t)}{\sqrt{2\tau^2}}) - erf(\frac{\kappa - \psi(t)}{\sqrt{2\tau^2}}) \right)\)`
+
+---
+
+### Model Classes and Summary
+
+.pull-left[
+
+#### Model Summary
+
+| Model  | `\(a\)`                   | `\(r\)`                                                                       | npar
+|--------|-----------------------|---------------------------------------------------------------------------|-----
+| 1      | `\(a_{12} \neq a_{21}\)`  | `\(c_i\)`                                                                     | 6
+| 3C     | `\(a_{12} \neq a_{21}\)`  | `\(\beta_{0} + \beta_{1} \left(\frac{\psi'_i(t) - \psi'_i}{	au^2_i}\right)\)` | 4
+
+]
+
+.pull-right[
+
+#### Possible Model Classes
+
+<div id="htmlwidget-0ba0c5c4eaadf9dce682" style="width:80%;height:80%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0ba0c5c4eaadf9dce682">{"x":{"diagram":"\n  digraph Model_Strategy {\n  # \n  graph [overlap = true, fontsize = 10, layout = dot, rankdir = LR]\n  \n  #Nodes\n  node [shape = box, fontname = Helvetica]\n  \n  node [label = <Model Class1a QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT>=&tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT> = &tau;, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> = w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT> = w>]\n  MC1B\n  \n  node [label = <Model Class2 QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT>&ne;&tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &ne; w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>>] \n  MC2B\n  \n  node [label = <Model Class3 QLVE &tau;<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &tilde; &tau;<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>, w<FONT POINT-SIZE=\"8\"><SUB>p=1<\/SUB><\/FONT> &tilde; w<FONT POINT-SIZE=\"8\"><SUB>p=2<\/SUB><\/FONT>>] \n  MC3B\n  \n  \n  node [label = <Model Class1 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1,ii<\/SUB><\/FONT> = a<FONT POINT-SIZE=\"8\"><SUB>p=2,ii<\/SUB><\/FONT> = a<FONT POINT-SIZE=\"8\"><SUB>ii<\/SUB><\/FONT>>]\n  MC1CL\n  \n  node [label = <Model Class2 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1, 11<\/SUB><\/FONT> &ne; a<FONT POINT-SIZE=\"8\"><SUB>p=2, 11<\/SUB><\/FONT>>] \n  MC2CL\n  \n  node [label = <Model Class3 CLVE a<FONT POINT-SIZE=\"8\"><SUB>p=1, 11<\/SUB><\/FONT> &tilde; a<FONT POINT-SIZE=\"8\"><SUB>p=2, 11<\/SUB><\/FONT>>] \n  MC3CL\n  \n  node [label = \"Best\nQLVE\"] \n  BestB\n  \n  \n  node [label = \"Best\nCLVE\"]\n  BestCL\n  \n  \n  \n  #Edges\n  MC1B -> BestB MC2B -> BestB MC3B -> BestB MC1CL -> BestCL MC2CL -> BestCL MC3CL -> BestCL\n  \n}\n  \n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+]
+
+* Model Class 1 `\(\Rightarrow\)` Shared parameter (Competition does not change intraspecific interaction)
+* Model Class 2 `\(\Rightarrow\)` Independence (Competition changes intraspecific interaction)
+* Model Class 3 `\(\Rightarrow\)` Correlated parameters ()
+
+---
+### Some Results
+
+.pull-left[
+&lt;div class="figure"&gt;
+&lt;img src="Pics/loos_model1.png" alt="looic for model 1 in model class and model class 2" width="100%" /&gt;
+&lt;p class="caption"&gt;looic for model 1 in model class and model class 2&lt;/p&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;div class="figure"&gt;
+&lt;img src="Pics/loos_model3C.png" alt="looic for model 3C in model class and model class 2" width="100%" /&gt;
+&lt;p class="caption"&gt;looic for model 3C in model class and model class 2&lt;/p&gt;
+&lt;/div&gt;
+]
+
+---
+class: center, middle
+
+##  Questions &amp; Suggestions 😀
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"ratio": "16:9",
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
